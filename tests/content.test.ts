@@ -88,6 +88,7 @@ describe("internal links", () => {
     const hrefs = [...source.matchAll(/\]\((\/[^)\s#]*)/g)].map(
       (m) => m[1] ?? "",
     );
-    for (const href of hrefs) expect(exists(href), href).toBe(true);
+    const broken = hrefs.filter((href) => !exists(href));
+    expect(broken).toEqual([]);
   });
 });
