@@ -61,7 +61,7 @@ Every lesson has the same parts:
 5. **Additional resources** are optional and collapsed by default.
 
 > [!TIP]
-> Keep a scratch project open while you read. Every code example in the TypeScript and React path type-checks under the strict compiler settings set up in [A Strict tsconfig](/lessons/typescript/strict-config/).
+> Keep a scratch project open while you read. TypeScript examples on this site are type-checked in CI under the strict compiler settings from [A Strict tsconfig](/lessons/typescript/strict-config/); only a few short fragments are excluded.
 
 ## Inside a project
 
