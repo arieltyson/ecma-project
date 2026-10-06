@@ -1,0 +1,47 @@
+@layer components {
+  .about-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    margin-block-end: var(--space-8);
+    padding: var(--space-1);
+    border-radius: var(--radius-md);
+    background: var(--fill);
+  }
+
+  .about-tabs a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--size-hit-target);
+    padding-inline: var(--space-4);
+    border-radius: var(--radius-sm);
+    color: var(--label);
+    font-size: var(--text-subheadline-size);
+    font-weight: var(--text-caption-weight);
+    text-decoration: none;
+  }
+
+  .about-tabs a[aria-current="page"] {
+    background: var(--surface);
+    box-shadow: var(--shadow-raised);
+  }
+
+  .about-body .button {
+    margin-block-start: var(--space-4);
+  }
+
+  .button:disabled {
+    cursor: not-allowed;
+    color: var(--label-secondary);
+  }
+
+  .license {
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    font-size: var(--text-footnote-size);
+    white-space: pre-wrap;
+  }
+}

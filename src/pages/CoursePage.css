@@ -1,0 +1,16 @@
+@layer components {
+  .status {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-ring-sm);
+    block-size: var(--size-ring-sm);
+    border-radius: var(--radius-pill);
+    background: var(--fill);
+    color: var(--label-secondary);
+  }
+
+  .status-done {
+    background: var(--success);
+    color: var(--bg);
+  }
+}

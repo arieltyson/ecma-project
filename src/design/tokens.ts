@@ -15,6 +15,8 @@ export const colors = {
   bg: ["#FFFFFF", "#000000"],
   "bg-grouped": ["#F5F5F7", "#000000"],
   surface: ["#FFFFFF", "#1C1C1E"],
+  // A raised panel on the plain background, such as a card or the quiz.
+  card: ["#F5F5F7", "#1C1C1E"],
   fill: ["#E8E8ED", "#2C2C2E"],
   "fill-strong": ["#D2D2D7", "#3A3A3C"],
   "code-bg": ["#F5F5F7", "#1C1C1E"],
@@ -22,7 +24,7 @@ export const colors = {
   // Borders that identify a control, so they need 3:1 (WCAG 1.4.11).
   "separator-strong": ["#86868B", "#7C7C80"],
   label: ["#1D1D1F", "#F5F5F7"],
-  "label-secondary": ["#6E6E73", "#A1A1A6"],
+  "label-secondary": ["#636366", "#A1A1A6"],
   accent: ["#0066CC", "#2997FF"],
   "accent-fill": ["#0066CC", "#0071E3"],
   "on-accent": ["#FFFFFF", "#FFFFFF"],
@@ -59,9 +61,20 @@ export const syntax = {
 
 /** Text colour → every background it is drawn on. */
 export const contrastPairs = {
-  label: ["bg", "bg-grouped", "surface", "fill", "code-bg"],
-  "label-secondary": ["bg", "bg-grouped", "surface", "code-bg"],
-  accent: ["bg", "bg-grouped", "surface", "code-bg", "accent-tint"],
+  label: [
+    "bg",
+    "bg-grouped",
+    "surface",
+    "fill",
+    "code-bg",
+    "card",
+    "accent-tint",
+    "success-tint",
+    "danger-tint",
+    "caution-tint",
+  ],
+  "label-secondary": ["bg", "bg-grouped", "surface", "code-bg", "card", "fill"],
+  accent: ["bg", "bg-grouped", "surface", "code-bg", "card", "accent-tint"],
   "on-accent": ["accent-fill"],
   success: ["bg", "surface", "success-tint"],
   danger: ["bg", "surface", "danger-tint"],
@@ -106,6 +119,7 @@ export const size = {
   hairline: "1px",
   "focus-ring": "3px",
   "underline-offset": "0.2em",
+  "code-inline": "0.9em",
   // The HIG minimum hit target, 44 points.
   "hit-target": "2.75rem",
   "nav-height": "3.25rem",
@@ -114,6 +128,7 @@ export const size = {
   "icon-lg": "1.75rem",
   "ring-sm": "1.75rem",
   measure: "42rem",
+  "hero-measure": "14em",
   content: "62rem",
   dialog: "36rem",
   sidebar: "14rem",
