@@ -38,6 +38,21 @@ export const catalog = [
       "Modern JavaScript, TypeScript in depth, the browser platform and React, ending in a single-page app you build yourself.",
     courses: [
       {
+        id: "javascript",
+        title: "JavaScript",
+        summary: "The language features modern TypeScript is built on.",
+        lessons: [
+          "scope-and-closures",
+          "objects-and-classes",
+          "modules",
+          "iterators-and-generators",
+          "promises-and-async",
+          "cancellation-and-errors",
+          "modern-ecmascript",
+          "project-chat-parser",
+        ],
+      },
+      {
         id: "typescript",
         title: "TypeScript",
         summary: "From everyday types to type-level programming.",
@@ -129,6 +144,17 @@ export const catalog = [
           "accessibility",
           "tooling",
           "project-capstone",
+        ],
+      },
+      {
+        id: "live-coding",
+        title: "Live Coding",
+        summary: "Practice problems and talking through your decisions.",
+        lessons: [
+          "thinking-out-loud",
+          "utility-drills",
+          "react-drills",
+          "frontend-system-design",
         ],
       },
     ],
