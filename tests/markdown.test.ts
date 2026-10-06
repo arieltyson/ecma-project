@@ -85,3 +85,16 @@ describe("compileLesson", () => {
     expect(html).toMatch(/<div class="table-scroll" tabindex="0"><table>/);
   });
 });
+
+describe("task lists", () => {
+  it("label each checkbox and enable it", async () => {
+    const { html } = await compileLesson(
+      `${FRONTMATTER}\n- [ ] Tested\n`,
+      "x.md",
+    );
+    expect(html).toMatch(
+      /<li class="task-list-item"><label><input type="checkbox">/,
+    );
+    expect(html).not.toContain("disabled");
+  });
+});

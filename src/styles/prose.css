@@ -68,6 +68,27 @@
     color: var(--label-secondary);
   }
 
+  /* Task lists */
+
+  .prose .contains-task-list {
+    padding-inline-start: 0;
+    list-style: none;
+  }
+
+  .prose .task-list-item label {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    cursor: pointer;
+  }
+
+  .prose .task-list-item input {
+    accent-color: var(--accent);
+    inline-size: var(--size-icon-sm);
+    block-size: var(--size-icon-sm);
+    flex: none;
+  }
+
   /* Code blocks */
 
   .code-block {

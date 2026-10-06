@@ -135,9 +135,40 @@ function rehypeSite(base: string, collected: Collected) {
         }
       }
       if (el.tagName === "table") wrappers.push(() => wrapTable(el));
+      if (isTaskItem(el)) wrappers.push(() => labelTask(el));
     });
     for (const wrap of wrappers) wrap();
   };
+}
+
+function isTaskItem(el: Element): boolean {
+  const className = el.properties["className"];
+  return (
+    el.tagName === "li" &&
+    Array.isArray(className) &&
+    className.includes("task-list-item")
+  );
+}
+
+/**
+ * GitHub task list items render a disabled, unlabelled checkbox. Wrap
+ * each item's content in a label and enable the box, so a checklist can
+ * be ticked off and every checkbox has an accessible name.
+ */
+function labelTask(item: Element) {
+  for (const child of item.children) {
+    if (child.type === "element" && child.tagName === "input") {
+      delete child.properties["disabled"];
+    }
+  }
+  item.children = [
+    {
+      type: "element",
+      tagName: "label",
+      properties: {},
+      children: item.children,
+    },
+  ];
 }
 
 /** Lets wide tables scroll inside the reading column, not the page. */
