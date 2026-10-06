@@ -1,0 +1,111 @@
+@layer components {
+  .search {
+    inline-size: min(100% - var(--space-8), var(--size-dialog));
+    max-block-size: min(100% - var(--space-20), var(--size-content));
+    margin: var(--space-20) auto auto;
+    padding: 0;
+    border: var(--size-hairline) solid var(--separator);
+    border-radius: var(--radius-xl);
+    background: var(--surface);
+    color: var(--label);
+    box-shadow: var(--shadow-dialog);
+  }
+
+  .search::backdrop {
+    background: var(--scrim);
+    backdrop-filter: blur(var(--space-1));
+  }
+
+  .search[open] {
+    animation: search-in var(--motion-base) var(--motion-settle);
+  }
+
+  @keyframes search-in {
+    from {
+      opacity: 0;
+      scale: 0.97;
+    }
+  }
+
+  .search-field {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-inline: var(--space-4) var(--space-2);
+    border-block-end: var(--size-hairline) solid var(--separator);
+    color: var(--label-secondary);
+  }
+
+  .search-field input {
+    flex: 1;
+    min-block-size: var(--space-16);
+    border: 0;
+    background: none;
+    color: var(--label);
+    font-size: var(--text-title3-size);
+    outline: none;
+  }
+
+  .search-field input::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  .search-close {
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-hit-target);
+    block-size: var(--size-hit-target);
+    border-radius: var(--radius-pill);
+  }
+
+  .search-close:hover {
+    background: var(--fill);
+  }
+
+  .search-results {
+    padding: var(--space-2);
+    list-style: none;
+  }
+
+  .search-results:empty {
+    display: none;
+  }
+
+  .search-result {
+    display: grid;
+    gap: var(--space-0);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+
+  .search-result[aria-selected="true"] {
+    background: var(--accent-fill);
+    color: var(--on-accent);
+  }
+
+  .search-result-title {
+    font-weight: var(--text-headline-weight);
+  }
+
+  .search-result-course {
+    font-size: var(--text-footnote-size);
+    color: var(--label-secondary);
+  }
+
+  .search-result[aria-selected="true"] .search-result-course {
+    color: var(--on-accent);
+  }
+
+  .search-empty {
+    padding: var(--space-6) var(--space-4);
+    color: var(--label-secondary);
+    text-align: center;
+  }
+
+  @media (forced-colors: active) {
+    .search-result[aria-selected="true"] {
+      outline: var(--size-focus-ring) solid Highlight;
+    }
+  }
+}

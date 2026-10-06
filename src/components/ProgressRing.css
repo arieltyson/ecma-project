@@ -1,0 +1,41 @@
+@layer components {
+  .progress {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--size-ring-sm);
+    block-size: var(--size-ring-sm);
+  }
+
+  .progress svg {
+    position: absolute;
+    inset: 0;
+    rotate: -90deg;
+    fill: none;
+    stroke-width: 3;
+  }
+
+  .progress-track {
+    stroke: var(--fill);
+  }
+
+  .progress-value {
+    stroke: var(--accent);
+    stroke-linecap: round;
+    transition: stroke-dasharray var(--motion-slow) var(--motion-settle);
+  }
+
+  .progress[data-complete] .progress-value {
+    stroke: var(--success);
+  }
+
+  .progress[data-empty] .progress-value {
+    visibility: hidden;
+  }
+
+  .progress-label {
+    color: var(--label-secondary);
+    font-size: var(--text-caption-size);
+    font-variant-numeric: tabular-nums;
+  }
+}

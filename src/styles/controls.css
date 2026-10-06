@@ -1,0 +1,47 @@
+/* Buttons shared across the site: a filled primary and a tinted
+   secondary, both at least one hit target tall. */
+
+@layer components {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-block-size: var(--size-hit-target);
+    padding-inline: var(--space-5);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-callout-size);
+    font-weight: var(--text-headline-weight);
+    text-decoration: none;
+    transition:
+      background-color var(--motion-fast) var(--motion-ease),
+      scale var(--motion-fast) var(--motion-ease);
+  }
+
+  .button:active {
+    scale: 0.98;
+  }
+
+  .button-primary {
+    background: var(--accent-fill);
+    color: var(--on-accent);
+  }
+
+  .button-primary:hover {
+    filter: brightness(1.08);
+  }
+
+  .button-secondary {
+    background: var(--fill);
+    color: var(--label);
+  }
+
+  .button-secondary:hover {
+    background: var(--fill-strong);
+  }
+
+  .button-secondary[aria-pressed="true"] {
+    background: var(--success-tint);
+    color: var(--success);
+  }
+}

@@ -1,0 +1,22 @@
+@layer components {
+  .icon {
+    flex: none;
+    inline-size: var(--size-icon);
+    block-size: var(--size-icon);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .icon[data-size="sm"] {
+    inline-size: var(--size-icon-sm);
+    block-size: var(--size-icon-sm);
+  }
+
+  .icon[data-size="lg"] {
+    inline-size: var(--size-icon-lg);
+    block-size: var(--size-icon-lg);
+  }
+}

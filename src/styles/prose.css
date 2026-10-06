@@ -1,0 +1,194 @@
+/* Lesson content compiled from Markdown. Vertical rhythm comes from the
+   spacing scale; headings use the iOS text styles. */
+
+@layer components {
+  .prose {
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+  }
+
+  .prose > * + * {
+    margin-block-start: var(--space-4);
+  }
+
+  .prose h2 {
+    margin-block-start: var(--space-12);
+    font-size: var(--text-title2-size);
+    line-height: var(--text-title2-leading);
+    font-weight: var(--text-title2-weight);
+    letter-spacing: var(--text-title2-tracking);
+  }
+
+  .prose h3 {
+    margin-block-start: var(--space-8);
+    font-size: var(--text-title3-size);
+    line-height: var(--text-title3-leading);
+    font-weight: var(--text-title3-weight);
+  }
+
+  .prose h2 + *,
+  .prose h3 + * {
+    margin-block-start: var(--space-3);
+  }
+
+  .prose ul,
+  .prose ol {
+    padding-inline-start: var(--space-6);
+  }
+
+  .prose li + li {
+    margin-block-start: var(--space-2);
+  }
+
+  .prose li::marker {
+    color: var(--label-secondary);
+  }
+
+  .prose strong {
+    font-weight: var(--text-headline-weight);
+  }
+
+  .prose :not(pre) > code {
+    padding: var(--space-0) var(--space-1);
+    border-radius: var(--radius-sm);
+    background: var(--code-bg);
+    font-size: var(--size-code-inline);
+    overflow-wrap: anywhere;
+  }
+
+  .prose hr {
+    border: 0;
+    border-block-start: var(--size-hairline) solid var(--separator);
+    margin-block: var(--space-10);
+  }
+
+  .prose blockquote {
+    padding-inline-start: var(--space-4);
+    border-inline-start: var(--size-focus-ring) solid var(--separator);
+    color: var(--label-secondary);
+  }
+
+  /* Code blocks */
+
+  .code-block {
+    position: relative;
+  }
+
+  .code-block pre {
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-code-size);
+    line-height: var(--text-code-leading);
+    overflow-x: auto;
+    tab-size: 2;
+  }
+
+  .code-block pre:focus-visible {
+    outline-offset: calc(var(--size-focus-ring) * -1);
+  }
+
+  .copy {
+    position: absolute;
+    inset-block-start: var(--space-2);
+    inset-inline-end: var(--space-2);
+    min-block-size: var(--size-ring-sm);
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--label);
+    font-size: var(--text-caption-size);
+    font-weight: var(--text-caption-weight);
+    box-shadow: var(--shadow-raised);
+    opacity: 0;
+    transition: opacity var(--motion-fast) var(--motion-ease);
+  }
+
+  .code-block:hover .copy,
+  .copy:focus-visible {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .copy {
+      opacity: 1;
+    }
+  }
+
+  /* Tables */
+
+  .table-scroll {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: var(--size-hairline) solid var(--separator);
+  }
+
+  .prose table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-subheadline-size);
+    line-height: var(--text-subheadline-leading);
+  }
+
+  .prose th,
+  .prose td {
+    padding: var(--space-2) var(--space-3);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .prose th {
+    background: var(--bg-grouped);
+    font-weight: var(--text-headline-weight);
+  }
+
+  .prose tr + tr td,
+  .prose thead + tbody td {
+    border-block-start: var(--size-hairline) solid var(--separator);
+  }
+
+  /* Callouts from GitHub alert syntax */
+
+  .callout {
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--accent-tint);
+  }
+
+  .callout > * + * {
+    margin-block-start: var(--space-2);
+  }
+
+  .callout-title {
+    color: var(--accent);
+    font-size: var(--text-footnote-size);
+    font-weight: var(--text-headline-weight);
+    letter-spacing: var(--text-caption-tracking);
+    text-transform: uppercase;
+  }
+
+  .callout[data-kind="warning"],
+  .callout[data-kind="caution"] {
+    background: var(--caution-tint);
+  }
+
+  .callout[data-kind="warning"] .callout-title,
+  .callout[data-kind="caution"] .callout-title {
+    color: var(--caution);
+  }
+
+  .callout[data-kind="tip"] {
+    background: var(--success-tint);
+  }
+
+  .callout[data-kind="tip"] .callout-title {
+    color: var(--success);
+  }
+
+  .callout :not(pre) > code {
+    background: var(--surface);
+  }
+
+  .callout .code-block pre {
+    background: var(--surface) !important;
+  }
+}

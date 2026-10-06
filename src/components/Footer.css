@@ -1,0 +1,40 @@
+@layer components {
+  .footer {
+    border-block-start: var(--size-hairline) solid var(--separator);
+    background: var(--bg-grouped);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    max-inline-size: var(--size-content);
+    margin-inline: auto;
+    padding: var(--space-6) var(--space-4) var(--space-10);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-2);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-footnote-size);
+  }
+
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--size-hit-target);
+    padding-inline: var(--space-2);
+    color: var(--label-secondary);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    color: var(--label);
+    text-decoration: underline;
+  }
+}
