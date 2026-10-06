@@ -80,7 +80,8 @@ function Accessibility() {
         </li>
         <li>
           Text sizes use relative units and follow your browser font size.
-          Controls are at least 44 points tall.
+          Controls meet the WCAG 2.2 minimum target size, and primary controls
+          are at least 44 points tall.
         </li>
         <li>
           Appearance follows your system light or dark setting, with a manual
