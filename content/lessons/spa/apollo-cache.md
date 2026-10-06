@@ -1,6 +1,6 @@
 ---
 title: The Normalized Cache
-summary: How InMemoryCache stores entities by ID, how to configure keys and pagination, and how to update the cache after mutations.
+summary: How Apollo Client's InMemoryCache stores entities by ID, how to configure keys and pagination, and how to update the cache after mutations.
 minutes: 40
 objectives:
   - Explain normalisation, cache IDs and references.

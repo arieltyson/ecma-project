@@ -1,6 +1,7 @@
 // Ranks lessons against a query. Every word must appear in the title,
-// summary or course name; title matches, and matches at the start of a
-// word, rank higher.
+// summary, objectives or course name; title matches rank highest, then
+// summary and course, then objectives, and matches at the start of a
+// word rank higher.
 
 import type { CourseMeta, LessonMeta } from "../content/schema.ts";
 
@@ -26,11 +27,15 @@ export function search(
   return entries
     .map((entry) => {
       const title = entry.lesson.title.toLowerCase();
-      const rest =
+      const about =
         `${entry.lesson.summary} ${entry.course.title}`.toLowerCase();
+      const keywords = entry.lesson.keywords.toLowerCase();
       let total = 0;
       for (const word of words) {
-        const points = score(title, word, 3) || score(rest, word, 1);
+        const points =
+          score(title, word, 6) ||
+          score(about, word, 2) ||
+          score(keywords, word, 1);
         if (points === 0) return { entry, total: 0 };
         total += points;
       }

@@ -57,6 +57,8 @@ export interface LessonMeta {
   readonly summary: string;
   readonly kind: LessonKind;
   readonly minutes: number;
+  /** The lesson's objectives, joined, for search. */
+  readonly keywords: string;
 }
 
 export interface CourseMeta {

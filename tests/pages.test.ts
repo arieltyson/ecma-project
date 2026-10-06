@@ -1,6 +1,7 @@
 // Checks the prerendered pages in dist/. Runs after `npm run build`
 // (the order `npm run check` uses) and is skipped when dist/ is absent.
 
+import { createHash } from "node:crypto";
 import { existsSync, globSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { JSDOM } from "jsdom";
@@ -78,6 +79,28 @@ describe.runIf(pages.length > 0)("prerendered pages", () => {
 
     it("gives every image alternative text", () => {
       expect(document.querySelectorAll("img:not([alt])")).toHaveLength(0);
+    });
+
+    it("allows its inline scripts by hash in the security policy", () => {
+      const policy =
+        document
+          .querySelector('meta[http-equiv="Content-Security-Policy"]')
+          ?.getAttribute("content") ?? "";
+      expect(policy).toContain("object-src 'none'");
+      for (const script of document.querySelectorAll("script:not([src])")) {
+        const hash = createHash("sha256")
+          .update(script.textContent ?? "")
+          .digest("base64");
+        expect(policy).toContain(`'sha256-${hash}'`);
+      }
+    });
+
+    it("records the route it was rendered for", () => {
+      const route = document.getElementById("root")?.dataset["route"] ?? "";
+      const expected = file.endsWith("index.html")
+        ? `/ecma-project/${file.replace(/index\.html$/, "")}`
+        : `/ecma-project/${file}`;
+      expect(route).toBe(expected);
     });
 
     it("renders the page content without JavaScript", () => {

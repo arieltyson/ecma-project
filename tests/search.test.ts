@@ -6,6 +6,7 @@ function entry(
   title: string,
   summary = "",
   courseTitle = "Course",
+  keywords = "",
 ): SearchEntry {
   const lesson: LessonMeta = {
     id: `c/${title}`,
@@ -15,6 +16,7 @@ function entry(
     summary,
     kind: "lesson",
     minutes: 1,
+    keywords,
   };
   const course: CourseMeta = {
     id: "c",
@@ -32,6 +34,12 @@ describe("search", () => {
     entry("Advanced Generics"),
     entry("Cookies", "SameSite and HttpOnly"),
     entry("Effects", "", "React"),
+    entry(
+      "The Normalized Cache",
+      "",
+      "Single-Page Apps",
+      "Configure Apollo field policies",
+    ),
   ];
 
   it("returns nothing for an empty query", () => {
@@ -46,6 +54,12 @@ describe("search", () => {
   it("matches summaries and course titles", () => {
     expect(search(entries, "samesite")[0]?.lesson.title).toBe("Cookies");
     expect(search(entries, "react")[0]?.lesson.title).toBe("Effects");
+  });
+
+  it("matches objectives", () => {
+    expect(search(entries, "apollo cache")[0]?.lesson.title).toBe(
+      "The Normalized Cache",
+    );
   });
 
   it("requires every word to match", () => {
