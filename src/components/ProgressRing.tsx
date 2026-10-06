@@ -1,6 +1,9 @@
 import "./ProgressRing.css";
 
-/** A circular progress gauge; the visible count doubles as its label. */
+/**
+ * A circular progress gauge; the visible count doubles as its label.
+ * Nothing is shown until there is progress to show.
+ */
 export function ProgressRing({
   done,
   total,
@@ -8,14 +11,11 @@ export function ProgressRing({
   readonly done: number;
   readonly total: number;
 }) {
+  if (done === 0) return null;
   const fraction = total === 0 ? 0 : done / total;
   const complete = total > 0 && done === total;
   return (
-    <span
-      className="progress"
-      data-complete={complete || undefined}
-      data-empty={done === 0 || undefined}
-    >
+    <span className="progress" data-complete={complete || undefined}>
       <svg viewBox="0 0 36 36" aria-hidden="true" focusable="false">
         <circle className="progress-track" cx="18" cy="18" r="15.5" />
         <circle
