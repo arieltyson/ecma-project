@@ -63,7 +63,7 @@ export function buildCatalog(root: string): PathMeta[] {
       summary: course.summary,
       lessons: course.lessons.map((slug): LessonMeta => {
         const file = join(lessonsDir(root), course.id, `${slug}.md`);
-        const { title, summary, kind, minutes } = readFrontmatter(
+        const { title, summary, kind, minutes, objectives } = readFrontmatter(
           readFileSync(file, "utf8"),
           file,
         );
@@ -75,6 +75,7 @@ export function buildCatalog(root: string): PathMeta[] {
           summary,
           kind,
           minutes,
+          keywords: objectives.join(" "),
         };
       }),
     })),
@@ -98,8 +99,11 @@ export function content(): Plugin {
       if (id !== RESOLVED_ID) return undefined;
       const dir = lessonsDir(root);
       this.addWatchFile(join(root, "content", "catalog.ts"));
-      for (const file of readdirSync(dir, { recursive: true })) {
-        this.addWatchFile(join(dir, String(file)));
+      for (const file of readdirSync(dir, {
+        recursive: true,
+        encoding: "utf8",
+      })) {
+        if (file.endsWith(".md")) this.addWatchFile(join(dir, file));
       }
       return `export const paths = ${JSON.stringify(buildCatalog(root))};`;
     },
