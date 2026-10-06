@@ -184,7 +184,13 @@ export interface CompiledLesson {
 export function readFrontmatter(source: string, file: string): Frontmatter {
   const match = /^---\n([\s\S]*?)\n---\n/.exec(source);
   if (!match?.[1]) throw new Error(`${file}: missing YAML frontmatter`);
-  const result = Frontmatter.safeParse(parseYaml(match[1]));
+  let data: unknown;
+  try {
+    data = parseYaml(match[1]);
+  } catch (error) {
+    throw new Error(`${file}: invalid YAML frontmatter`, { cause: error });
+  }
+  const result = Frontmatter.safeParse(data);
   if (!result.success) {
     const issues = result.error.issues
       .map((issue) => `  ${issue.path.join(".")}: ${issue.message}`)
