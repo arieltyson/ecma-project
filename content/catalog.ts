@@ -66,6 +66,27 @@ export const catalog = [
           "project-route-builder",
         ],
       },
+      {
+        id: "browser",
+        title: "The Browser",
+        summary:
+          "Loading, rendering, the event loop, requests, cookies, storage, history and security.",
+        lessons: [
+          "navigation-to-pixels",
+          "rendering-pipeline",
+          "event-loop",
+          "devtools",
+          "http-and-caching",
+          "document-vs-async-requests",
+          "cookies",
+          "storage",
+          "history",
+          "security",
+          "performance",
+          "project-router",
+          "project-network-detective",
+        ],
+      },
     ],
   },
 ] as const satisfies readonly PathSpec[];
