@@ -54,7 +54,7 @@ writeFileSync(
   JSON.stringify({
     extends: "../../tsconfig.base.json",
     compilerOptions: {
-      lib: ["es2024", "esnext.disposable", "dom", "dom.iterable"],
+      lib: ["esnext", "dom", "dom.iterable", "dom.asynciterable"],
       jsx: "react-jsx",
       types: ["node"],
       noUnusedLocals: false,
