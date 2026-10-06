@@ -2,6 +2,7 @@
 // is a real document: readable without JavaScript, indexable, and
 // served by GitHub Pages without a single-page fallback.
 
+import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -15,7 +16,33 @@ const server = (await import(
 )) as typeof Server;
 
 const { BASE } = server;
-const template = await readFile(join(dist, "index.html"), "utf8");
+const template = withPolicy(await readFile(join(dist, "index.html"), "utf8"));
+
+/**
+ * Adds a Content-Security-Policy that allows only this origin's scripts
+ * plus the inline theme script, identified by its hash. Styles allow
+ * inline because highlighted code uses style attributes.
+ */
+function withPolicy(html: string): string {
+  const hashes = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(
+    ([, code = ""]) =>
+      `'sha256-${createHash("sha256").update(code).digest("base64")}'`,
+  );
+  const policy = [
+    "default-src 'self'",
+    `script-src 'self' ${hashes.join(" ")}`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data:",
+    "connect-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join("; ");
+  return html.replace(
+    '<meta charset="utf-8" />',
+    `<meta charset="utf-8" />\n    <meta http-equiv="Content-Security-Policy" content="${policy}" />`,
+  );
+}
 
 function escape(text: string): string {
   return text
@@ -36,7 +63,10 @@ const routes = server.routes();
 for (const route of routes) {
   const page = await server.render(route);
   const document = template
-    .replace("<!--app-->", page.html)
+    .replace(
+      '<div id="root"><!--app--></div>',
+      `<div id="root" data-route="${escape(page.url)}">${page.html}</div>`,
+    )
     .replace(/<title>.*?<\/title>/, `<title>${escape(page.title)}</title>`)
     .replace(
       '<meta name="description" content="" />',
