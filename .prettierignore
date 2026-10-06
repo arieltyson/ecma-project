@@ -1,0 +1,4 @@
+dist/
+dist-server/
+package-lock.json
+content/**/*.md
