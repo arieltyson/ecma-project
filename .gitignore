@@ -36,3 +36,4 @@ npm-debug.log*
 # Local Working Notes
 docs/local/
 dist-server/
+.cache/
