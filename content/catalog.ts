@@ -112,6 +112,25 @@ export const catalog = [
           "project-stream-directory",
         ],
       },
+      {
+        id: "spa",
+        title: "Single-Page Apps",
+        summary:
+          "Architecture, routing, GraphQL, Apollo Client and real-time data.",
+        lessons: [
+          "architecture",
+          "routing",
+          "server-state",
+          "graphql",
+          "apollo-client",
+          "apollo-cache",
+          "typed-graphql",
+          "realtime",
+          "accessibility",
+          "tooling",
+          "project-capstone",
+        ],
+      },
     ],
   },
 ] as const satisfies readonly PathSpec[];
