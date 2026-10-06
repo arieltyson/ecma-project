@@ -36,7 +36,7 @@ export const colors = {
   caution: ["#8F5300", "#FFD60A"],
   "caution-tint": ["#FFF5E0", "#2E2600"],
   // Translucent bar material, drawn over content with a backdrop blur.
-  material: ["#FFFFFFCC", "#1C1C1ECC"],
+  material: ["#FFFFFFEB", "#1C1C1EEB"],
   // Behind modal dialogs. Not text, so not contrast tested.
   scrim: ["#0000004D", "#00000099"],
 } as const satisfies Record<string, ColorPair>;
