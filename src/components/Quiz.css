@@ -96,6 +96,14 @@
     color: var(--bg);
   }
 
+  .quiz code {
+    padding-inline: var(--space-1);
+    border-radius: var(--radius-sm);
+    background: var(--fill);
+    font-size: var(--size-code-inline);
+    overflow-wrap: anywhere;
+  }
+
   .quiz-feedback:empty {
     display: none;
   }

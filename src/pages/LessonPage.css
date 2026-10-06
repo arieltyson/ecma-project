@@ -37,6 +37,10 @@
     line-height: var(--text-callout-leading);
   }
 
+  .overview code {
+    font-size: var(--size-code-inline);
+  }
+
   .overview li::marker {
     color: var(--label-secondary);
   }

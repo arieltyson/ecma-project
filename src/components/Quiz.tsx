@@ -6,6 +6,7 @@
 import { useReducer, useRef } from "react";
 import type { QuizQuestion } from "../content/schema.ts";
 import { Icon } from "./Icon.tsx";
+import { InlineCode } from "./InlineCode.tsx";
 import "./Quiz.css";
 
 interface State {
@@ -81,7 +82,7 @@ export function Quiz({
         Question {state.index + 1} of {questions.length}
       </p>
       <h3 className="quiz-question" ref={headingRef} tabIndex={-1}>
-        {question.question}
+        <InlineCode text={question.question} />
       </h3>
       <ol className="quiz-options">
         {question.options.map((option, i) => {
@@ -112,7 +113,9 @@ export function Quiz({
                     LETTERS[i]
                   )}
                 </span>
-                <span>{option}</span>
+                <span>
+                  <InlineCode text={option} />
+                </span>
                 {status === "correct" || status === "incorrect" ? (
                   <span className="visually-hidden">
                     {status === "correct" ? ", correct answer" : ", incorrect"}
@@ -129,7 +132,9 @@ export function Quiz({
             <p className="quiz-verdict" data-correct={correct}>
               {correct ? "Correct." : "Not quite."}
             </p>
-            <p>{question.explanation}</p>
+            <p>
+              <InlineCode text={question.explanation} />
+            </p>
           </>
         ) : null}
       </div>

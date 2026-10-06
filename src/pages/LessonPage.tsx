@@ -3,6 +3,7 @@ import { useLessonBody } from "../content/lessons.ts";
 import type { LessonMeta } from "../content/schema.ts";
 import { Article } from "../components/Article.tsx";
 import { Icon } from "../components/Icon.tsx";
+import { InlineCode } from "../components/InlineCode.tsx";
 import { Quiz } from "../components/Quiz.tsx";
 import { Link } from "../router/router.tsx";
 import { setCompleted, useCompleted } from "../state/progress.ts";
@@ -56,7 +57,9 @@ export function LessonPage({ lesson }: { readonly lesson: LessonMeta }) {
           </h2>
           <ul>
             {body.objectives.map((objective) => (
-              <li key={objective}>{objective}</li>
+              <li key={objective}>
+                <InlineCode text={objective} />
+              </li>
             ))}
           </ul>
         </section>
