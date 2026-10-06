@@ -31,17 +31,20 @@ describe.each(files)("%s", (file) => {
     }
   });
 
-  if (frontmatter.kind === "lesson") {
-    it("ends with an assignment and has a knowledge check", () => {
+  const isLesson = frontmatter.kind === "lesson";
+
+  it.runIf(isLesson)(
+    "ends with an assignment and has a knowledge check",
+    () => {
       expect(body).toMatch(/^## Assignment$/m);
       expect(frontmatter.quiz.length).toBeGreaterThanOrEqual(3);
-    });
-  } else {
-    it("states requirements and questions to explain", () => {
-      expect(body).toMatch(/^## Requirements$/m);
-      expect(body).toMatch(/^## Explain it$/m);
-    });
-  }
+    },
+  );
+
+  it.runIf(!isLesson)("states requirements and questions to explain", () => {
+    expect(body).toMatch(/^## Requirements$/m);
+    expect(body).toMatch(/^## Explain it$/m);
+  });
 
   it("uses no em or en dashes", () => {
     expect(source).not.toMatch(/[–—]/);
