@@ -16,7 +16,7 @@ import { join, relative } from "node:path";
 
 const root = join(import.meta.dirname, "..");
 const out = join(root, ".cache", "snippets");
-const FENCE = /^```(ts|tsx|typescript)([^\n]*)\n([\s\S]*?)^```$/gm;
+const FENCE = /^```(tsx|typescript|ts)([^\n]*)\n([\s\S]*?)^```$/gm;
 
 interface Snippet {
   readonly file: string;
