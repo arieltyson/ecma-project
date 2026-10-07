@@ -71,7 +71,7 @@ The ECMA Project is a free, project-driven curriculum for building for the web w
 - 🛠️ **Projects with tests**: starter files and test suites in `exercises/`, run with `npm run exercise <name>`
 - ✅ **Knowledge checks**: one question at a time with instant, explained feedback
 - 🔎 **Search**: press `⌘K` or `/` to search titles, summaries and objectives
-- 📈 **Progress**: mark lessons complete; progress stays in your browser
+- 📈 **Progress**: mark lessons complete; progress stays in your browser, with backup and restore
 - 🌗 **Light and dark**: follows the system, with a manual override
 - ♿ **Accessible**: keyboard operable, screen reader friendly, readable without JavaScript
 

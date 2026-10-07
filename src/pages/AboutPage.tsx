@@ -1,9 +1,16 @@
-import type { JSX } from "react";
+import { useRef, type ChangeEvent, type JSX } from "react";
 import license from "../../LICENSE?raw";
 import { lessons } from "../content/catalog.ts";
 import { ABOUT_TABS, type AboutTab } from "../router/routes.ts";
 import { Link } from "../router/router.tsx";
-import { resetProgress, useCompleted } from "../state/progress.ts";
+import { announce } from "../components/announce.ts";
+import {
+  exportProgress,
+  importProgress,
+  parseBackup,
+  resetProgress,
+  useCompleted,
+} from "../state/progress.ts";
 import "./AboutPage.css";
 
 const LABELS: Record<AboutTab, string> = {
@@ -40,7 +47,8 @@ function Overview() {
         </li>
         <li>
           Mark a lesson complete to track your progress. Progress is saved in
-          this browser only.
+          this browser, and you can back it up from{" "}
+          <Link to={{ name: "about", tab: "privacy" }}>Privacy</Link>.
         </li>
       </ul>
       <h2>Standards</h2>
@@ -104,8 +112,42 @@ function Accessibility() {
   );
 }
 
+const knownIds: ReadonlySet<string> = new Set(
+  lessons.map((lesson) => lesson.id),
+);
+
+function downloadBackup() {
+  const blob = new Blob([exportProgress()], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "ecma-progress.json";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function plural(count: number, word: string): string {
+  return `${count} ${word}${count === 1 ? "" : "s"}`;
+}
+
+async function restoreBackup(event: ChangeEvent<HTMLInputElement>) {
+  const input = event.currentTarget;
+  const file = input.files?.[0];
+  input.value = "";
+  if (!file) return;
+  const ids = parseBackup(await file.text(), knownIds);
+  if (!ids) {
+    announce("That file is not a progress backup.");
+    return;
+  }
+  const added = importProgress(ids);
+  announce(`Restored ${plural(added, "lesson")}.`);
+}
+
 function Privacy() {
   const completed = useCompleted();
+  const fileInput = useRef<HTMLInputElement>(null);
+
   return (
     <>
       <p>
@@ -117,14 +159,44 @@ function Privacy() {
         Your completed lessons and your appearance choice are saved in this
         browser's local storage. They never leave your device.
       </p>
-      <button
-        type="button"
-        className="button button-secondary"
-        disabled={completed.size === 0}
-        onClick={resetProgress}
-      >
-        Reset progress
-      </button>
+      <p>
+        Safari deletes this data after seven days of browsing without a visit,
+        and clearing website data removes it in any browser. Back up your
+        progress to a file and restore it here, on this or another device.
+      </p>
+      <div className="about-actions">
+        <button
+          type="button"
+          className="button button-secondary"
+          disabled={completed.size === 0}
+          onClick={downloadBackup}
+        >
+          Back up progress
+        </button>
+        <button
+          type="button"
+          className="button button-secondary"
+          onClick={() => fileInput.current?.click()}
+        >
+          Restore progress
+        </button>
+        <button
+          type="button"
+          className="button button-secondary"
+          disabled={completed.size === 0}
+          onClick={resetProgress}
+        >
+          Reset progress
+        </button>
+        <input
+          ref={fileInput}
+          type="file"
+          accept="application/json,.json"
+          aria-label="Progress backup file"
+          hidden
+          onChange={(event) => void restoreBackup(event)}
+        />
+      </div>
       <h2>Hosting</h2>
       <p>
         The site is hosted by GitHub Pages, which may log visitor IP addresses

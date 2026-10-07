@@ -28,7 +28,10 @@
     box-shadow: var(--shadow-raised);
   }
 
-  .about-body .button {
+  .about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
     margin-block-start: var(--space-4);
   }
 

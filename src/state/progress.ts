@@ -2,6 +2,8 @@
 // to React and read with useSyncExternalStore, which keeps every
 // component consistent, follows changes made in other tabs, and renders
 // "nothing completed" on the server so hydration always matches.
+// Progress can be exported to a file and imported again, because some
+// browsers delete site data after a period without a visit.
 
 import { useSyncExternalStore } from "react";
 import type { LessonMeta } from "../content/schema.ts";
@@ -25,6 +27,11 @@ function parse(raw: string | null): ReadonlySet<LessonId> {
   } catch {
     return EMPTY;
   }
+}
+
+/** Asks the browser not to evict site data under storage pressure. */
+function requestPersistence() {
+  void navigator.storage?.persist?.().catch(() => false);
 }
 
 function getSnapshot(): ReadonlySet<LessonId> {
@@ -59,15 +66,56 @@ export function setCompleted(id: LessonId, completed: boolean): void {
   const next = new Set(getSnapshot());
   if (completed) next.add(id);
   else next.delete(id);
+  commit(next);
+  if (completed) requestPersistence();
+}
+
+function commit(next: ReadonlySet<LessonId>) {
   snapshot = next;
   writeItem(KEY, next.size > 0 ? JSON.stringify([...next]) : null);
   emit();
 }
 
+const FORMAT = "ecma-progress";
+
+/** The completed lessons as the contents of a backup file. */
+export function exportProgress(): string {
+  return `${JSON.stringify({ format: FORMAT, version: 1, completed: [...getSnapshot()] }, null, 2)}\n`;
+}
+
+/**
+ * Reads the lesson ids out of a backup file, keeping only ids in
+ * `known`. Returns null when the text is not a backup file.
+ */
+export function parseBackup(
+  text: string,
+  known: ReadonlySet<string>,
+): LessonId[] | null {
+  let value: unknown;
+  try {
+    value = JSON.parse(text);
+  } catch {
+    return null;
+  }
+  if (typeof value !== "object" || value === null) return null;
+  const { format, completed } = value as Record<string, unknown>;
+  if (format !== FORMAT || !Array.isArray(completed)) return null;
+  return completed.filter(
+    (id): id is LessonId => typeof id === "string" && known.has(id),
+  );
+}
+
+/** Adds the lessons in a backup to this browser's progress. */
+export function importProgress(ids: readonly LessonId[]): number {
+  const current = getSnapshot();
+  const next = new Set([...current, ...ids]);
+  commit(next);
+  if (ids.length > 0) requestPersistence();
+  return next.size - current.size;
+}
+
 export function resetProgress(): void {
-  snapshot = EMPTY;
-  writeItem(KEY, null);
-  emit();
+  commit(EMPTY);
 }
 
 export function useCompleted(): ReadonlySet<LessonId> {
